@@ -5,6 +5,8 @@ import auth, { RequestUser } from "../middleware/auth";
 import { PostsDataTypes } from "../types";
 import Post from "../models/Post";
 import { imageUpload } from "../multer";
+import User from "../models/User";
+import {usersRouter} from "./users";
 
 
 export const postsRouter = Router();
