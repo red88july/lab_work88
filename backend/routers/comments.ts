@@ -2,28 +2,26 @@ import mongoose from "mongoose";
 import { Router } from 'express';
 
 import auth, { RequestUser } from "../middleware/auth";
-import { PostDataTypes } from "../types";
-import Post from "../models/Post";
-import { imageUpload } from "../multer";
+
+import Comment from "../models/Comment";
 
 
-export const postsRouter = Router();
+export const commentsRouter = Router();
 
-postsRouter.post('/', auth, imageUpload.single('image'), async (req: RequestUser, res, next) => {
+commentsRouter.post('/', auth, async (req: RequestUser, res, next) => {
 
     try {
 
-        const postData: PostDataTypes = {
+        const commentsData = {
             user: req.user,
-            title: req.body.title,
-            description: req.body.description,
-            image: req.file ? req.file.filename : null,
+            post: req.body.post,
+            comment: req.body.comment,
         };
 
-        const newPost = new Post(postData);
-        await newPost.save();
+        const newComment = new Comment(commentsData);
+        await newComment.save();
 
-        res.send({message: 'New post added correctly!', newPost});
+        res.send({message: 'New comment added correctly!', newComment});
 
     } catch (e) {
         if (e instanceof mongoose.Error.ValidationError) {
@@ -33,3 +31,27 @@ postsRouter.post('/', auth, imageUpload.single('image'), async (req: RequestUser
     }
 
 });
+
+// commentsRouter.get('/',  async (req, res, next) => {
+//
+//     try {
+//
+//         const getComment = await Comment.find()
+//             .populate(
+//                 {
+//                     path: 'user',
+//                 }).populate(
+//                     {
+//                         path: 'post'
+//                     });
+//
+//         return res.send(getComment);
+//
+//     } catch (e) {
+//         if (e instanceof mongoose.Error.ValidationError) {
+//             return res.status(422).send(e);
+//         }
+//         next(e);
+//     }
+//
+// });
