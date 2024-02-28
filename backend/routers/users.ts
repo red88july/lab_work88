@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { Router } from 'express';
 
 import User from "../models/User";
-import { UserData } from "../types";
+import { UsersDataTypes } from "../types";
 
 export const usersRouter = Router();
 
@@ -10,7 +10,7 @@ usersRouter.post('/', async (req, res, next) => {
 
    try {
 
-       const userData: UserData = {
+       const userData: UsersDataTypes = {
            username: req.body.username,
            password: req.body.password,
        };

@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import {Router} from 'express';
 
-import auth, {RequestUser} from "../middleware/auth";
-import {PostDataTypes} from "../types";
+import auth, { RequestUser } from "../middleware/auth";
+import { PostsDataTypes } from "../types";
 import Post from "../models/Post";
-import {imageUpload} from "../multer";
+import { imageUpload } from "../multer";
 
 
 export const postsRouter = Router();
@@ -16,7 +16,7 @@ postsRouter.post('/', auth, imageUpload.single('image'), async (req: RequestUser
             return res.status(422).send({error: `Field Description is not to be an empty`});
         }
 
-        const postData: PostDataTypes = {
+        const postData: PostsDataTypes = {
             user: req.user,
             title: req.body.title,
             description: req.body.description,

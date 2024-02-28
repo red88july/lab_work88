@@ -1,19 +1,26 @@
 import { Model } from "mongoose";
 import User from "./models/User";
-export interface UserData {
+import Post from "./models/Post";
+export interface UsersDataTypes {
     username: string;
     password: string;
 }
 
-export interface UserDataExtendsSchema extends UserData {
+export interface UserDataExtendsSchema extends UsersDataTypes {
     token: string;
 }
 
-export interface PostDataTypes {
+export interface PostsDataTypes {
     user: User;
     title: string;
     description: string;
     image: string | null
+}
+
+export interface CommentsDataTypes {
+    user: User;
+    post: Post;
+    comment: string;
 }
 
 interface UserMethods {

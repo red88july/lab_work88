@@ -30,7 +30,6 @@ const CommentSchema = new Schema({
 
     comment: String,
 
-
 }, { versionKey: false });
 
 const Comment = model('Comment', CommentSchema);

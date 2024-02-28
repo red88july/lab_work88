@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import {Schema, model, HydratedDocument} from "mongoose";
+import { Schema, model, HydratedDocument } from "mongoose";
 import { randomUUID } from "crypto";
 
 import { UserDataExtendsSchema, UserMethods, UserModel } from "../types";
