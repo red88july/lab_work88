@@ -10,7 +10,6 @@ const MainNav = {
   },
 };
 
-
 const AppToolbar = () => {
   return (
     <AppBar sx={{mb: 2}}>

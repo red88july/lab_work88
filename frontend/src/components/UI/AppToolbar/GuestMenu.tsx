@@ -1,6 +1,7 @@
 import {Box, Button} from '@mui/material';
 import regButtonImg from '../../../assets/images/ic-registration.png';
 import logButtonImg from '../../../assets/images/ic-login.png';
+import {Link} from 'react-router-dom';
 
 const regButton = {
   border: '2px solid #FFF',
@@ -31,8 +32,8 @@ const GuestMenu = () => {
   return (
     <>
       <Box sx={{display: "flex", flexDirection: "row"}}>
-        <Button color="inherit" sx={regButton}>Register</Button>
-        <Button color="inherit" sx={logButton}>Login</Button>
+        <Button component={Link} to='/register' color="inherit" sx={regButton}>Register</Button>
+        <Button component={Link} to='/login' color="inherit" sx={logButton}>Login</Button>
       </Box>
     </>
   );
