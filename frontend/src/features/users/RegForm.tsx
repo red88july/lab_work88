@@ -1,11 +1,13 @@
-import {Avatar, Box, Button, CircularProgress, Container, Grid, Link, TextField, Typography} from '@mui/material';
+import { Alert, Avatar, Box, Button, CircularProgress, Container, Grid, Link, TextField, Typography } from '@mui/material';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import {useState} from 'react';
-import {Link as RouterLink, useNavigate} from 'react-router-dom';
-import {Registration} from '../../types';
-import {useAppDispatch, useAppSelector} from '../../../app/hooks.ts';
-import {registration} from './usersThunk.ts';
-import {isRegisterError, isRegisterUser} from './usersSlice.ts';
+import { registration } from './usersThunk.ts';
+import { isRegisterError, isRegisterUser } from './usersSlice.ts';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
+import { Registration } from '../../types';
+
 
 const RegForm = () => {
 
@@ -62,8 +64,13 @@ const RegForm = () => {
           <LockOutlinedIcon/>
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Registration
         </Typography>
+        {loadingRegisteredUser &&
+          <Alert severity="success">
+            New user is registered!
+          </Alert>
+        }
         <Box component="form" onSubmit={formSubmitHandler} sx={{mt: 3}}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -100,7 +107,7 @@ const RegForm = () => {
             variant="contained"
             sx={{mt: 3, mb: 2}}
           >
-            {loadingRegisteredUser ? <CircularProgress /> : "Register"}
+            {loadingRegisteredUser ? <CircularProgress/> : 'Register'}
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>

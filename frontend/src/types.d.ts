@@ -25,3 +25,17 @@ export interface ValidationError {
   name: string;
   _message: string;
 }
+
+export interface Login {
+  username: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  user: User;
+  message: string;
+}
+
+export interface GlobalError {
+  message: string;
+}
