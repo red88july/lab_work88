@@ -5,9 +5,9 @@ import storage from 'redux-persist/lib/storage';
 import {usersReducer} from '../src/features/users/usersSlice.ts';
 
 const usersPersistConfig = {
-  key: 'shop:users',
+  key: 'forum:users',
   storage: storage,
-  whitelist: ['user'],
+  whitelist: ['users'],
 };
 
 const rootReducer = combineReducers({
