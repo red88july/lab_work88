@@ -41,7 +41,7 @@ export const login = createAsyncThunk<LoginResponse, Login, { rejectValue: Globa
 export const logout = createAsyncThunk<void, undefined, { state: RootState }>(
   'users/logout',
   async (_, {getState, dispatch}) => {
-    const token = getState().users.users?.token;
+    const token = getState().users.users?.user.token;
     await axiosApi.delete('users/sessions', {headers: { 'Authorization': `Bearer:${token}`}});
     dispatch(unsetUser());
   }

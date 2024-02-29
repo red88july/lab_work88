@@ -1,8 +1,8 @@
 import { AppBar, Container, Grid, Link, Toolbar, Typography } from '@mui/material';
 import GuestMenu from './GuestMenu.tsx';
-import {useAppSelector} from '../../../../app/hooks.ts';
-import {selectUserDetails} from '../../../features/users/usersSlice.ts';
-import UserMenu from './UserMenu.tsx';
+import { useAppSelector } from '../../../../app/hooks.ts';
+import { selectUserDetails } from '../../../features/users/usersSlice.ts';
+import UserMenu from './UserMenu';
 
 const MainNav = {
   color: 'inherit',

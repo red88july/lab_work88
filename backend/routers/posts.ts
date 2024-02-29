@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import {Router} from 'express';
 
-import auth, { RequestUser } from "../middleware/auth";
-import { PostsDataTypes } from "../types";
+import auth, {RequestUser} from "../middleware/auth";
+import {PostsDataTypes} from "../types";
 import Post from "../models/Post";
-import { imageUpload } from "../multer";
+import {imageUpload} from "../multer";
 import User from "../models/User";
 import {usersRouter} from "./users";
 
@@ -34,6 +34,19 @@ postsRouter.post('/', auth, imageUpload.single('image'), async (req: RequestUser
         if (e instanceof mongoose.Error.ValidationError) {
             return res.status(422).send(e);
         }
+        next(e);
+    }
+
+});
+
+postsRouter.get('/', async (req, res, next) => {
+
+    try {
+
+        const getPosts = await Post.find().sort({datetime: -1});
+        return res.send(getPosts);
+
+    } catch (e) {
         next(e);
     }
 
