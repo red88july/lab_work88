@@ -39,3 +39,22 @@ export interface LoginResponse {
 export interface GlobalError {
   message: string;
 }
+
+export interface PostMutation {
+  _id: string;
+  user: {
+    _id: string;
+    username: string;
+    token: string;
+  };
+  title: string;
+  description: string;
+  image: string | null;
+  datetime: string;
+}
+
+export interface Post {
+  title: string;
+  description: string;
+  image: File | null;
+}

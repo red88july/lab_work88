@@ -3,7 +3,10 @@ import {User} from '../../../types';
 
 import {Box, Button, Link, Menu, MenuItem} from '@mui/material';
 import {useAppDispatch} from '../../../../app/hooks.ts';
-import {logout} from '../../../features/users/usersThunk.ts';
+import {login, logout} from '../../../features/users/usersThunk.ts';
+import {postsCreate} from '../../../features/posts/postsThunk.ts';
+import {useSelector} from 'react-redux';
+import {selecPosts} from '../../../features/posts/postsSlice.ts';
 
 const addPost = {
   color: 'inherit',

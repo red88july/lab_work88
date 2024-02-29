@@ -63,9 +63,9 @@ usersRouter.delete('/sessions', async (req, res ,next) => {
 
     try {
 
-        const headerValue = req.get( 'Authorization' );
-
         const messageSuccess = {message: 'Success!'};
+
+        const headerValue = req.get( 'Authorization' );
 
         if (!headerValue) {
             return res.send(messageSuccess)

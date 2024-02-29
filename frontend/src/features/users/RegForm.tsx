@@ -71,12 +71,11 @@ const RegForm = () => {
             New user is registered!
           </Alert>
         }
-        <Box component="form" onSubmit={formSubmitHandler} sx={{mt: 3}}>
+        <Box component="form" noValidate onSubmit={formSubmitHandler} sx={{mt: 3}}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                required
                 label="Username"
                 name="username"
                 value={registered.username}
@@ -89,7 +88,6 @@ const RegForm = () => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                required
                 name="password"
                 label="Password"
                 type="password"
