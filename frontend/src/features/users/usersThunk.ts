@@ -11,6 +11,7 @@ export const registration = createAsyncThunk<RegistrationResponse, Registration,
     try {
       const response = await axiosApi.post('/users', postUser);
       return response.data;
+
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 422) {
         return rejectWithValue(e.response.data);

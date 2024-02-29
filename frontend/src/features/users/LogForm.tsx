@@ -1,29 +1,21 @@
-import {
-  Alert,
-  Avatar,
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  Grid,
-  Link,
-  TextField,
-  Typography
-} from '@mui/material';
-import {Link as RouterLink, useNavigate} from 'react-router-dom';
-import {useState} from 'react';
+import { Alert, Avatar, Box, Button, CircularProgress, Container, Grid, Link, TextField, Typography } from '@mui/material';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
+import { login } from './usersThunk.ts';
+import {isLoginError, isLoginUser, selectUserDetails} from './usersSlice.ts';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
+
+import { Login } from '../../types';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-import {login} from './usersThunk.ts';
-import {isLoginError, isLoginUser} from './usersSlice.ts';
-import {useAppDispatch, useAppSelector} from '../../../app/hooks.ts';
-import {Login} from '../../types';
 
 
 const LogForm = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const userDetails = useAppSelector(selectUserDetails);
+
   const loadingLogin = useAppSelector(isLoginUser);
   const errorLogin = useAppSelector(isLoginError);
 
@@ -47,7 +39,19 @@ const LogForm = () => {
 
     try {
       await dispatch(login(loggining)).unwrap();
-      navigate('/');
+
+      setLoggining((prevState) => {
+        return {
+          ...prevState,
+          username: '',
+          password: '',
+        };
+      });
+
+      setTimeout(()=> {
+        navigate('/');
+      }, 1600);
+
     } catch (e) {
       //error
     }
@@ -72,6 +76,10 @@ const LogForm = () => {
         {errorLogin &&
           (<Alert severity="warning">
             {errorLogin.message}
+          </Alert>)}
+        {userDetails &&
+          (<Alert severity="success">
+            {userDetails.message}
           </Alert>)}
         <Box component="form" onSubmit={formSubmitHandler} sx={{mt: 3}}>
           <Grid container spacing={2}>

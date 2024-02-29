@@ -1,16 +1,21 @@
-import React, {useState} from 'react';
-import {Post} from '../../types';
-import {Box, Button, Container, Grid, TextField} from '@mui/material';
-import FileInput from '../../components/FileInput/FileInput.tsx';
-import {useAppDispatch} from '../../../app/hooks.ts';
-import {postsCreate} from './postsThunk.ts';
+import { Alert, Box, Button, CircularProgress, Container, Grid, TextField } from '@mui/material';
+import React, { useState } from 'react';
 
+import { useAppDispatch } from '../../../app/hooks.ts';
+import { postsCreate } from './postsThunk.ts';
+
+import FileInput from '../../components/FileInput/FileInput';
+import { useSelector } from 'react-redux';
+import { isErrorPost, isLoadPost } from './postsSlice.ts';
 
 const PostForm = () => {
 
   const dispatch = useAppDispatch();
 
-  const [state, setState] = useState<Post>({
+  const isLoadingPost = useSelector(isLoadPost);
+  const isErrorLoadPost = useSelector(isErrorPost);
+
+  const [state, setState] = useState({
     title: '',
     description: '',
     image: null,
@@ -28,7 +33,15 @@ const PostForm = () => {
     event.preventDefault();
     try {
       await dispatch(postsCreate(state)).unwrap();
-      // navigate('/');
+
+      setState((prevState) => {
+        return {
+          ...prevState,
+          title: '',
+          description: '',
+        };
+      });
+
     } catch (e) {
       //
     }
@@ -44,9 +57,16 @@ const PostForm = () => {
   };
 
   return (
-    <>
       <Container maxWidth="sm">
         <Box marginTop={20}>
+
+          {isErrorLoadPost && (
+            <Box marginBottom={4}>
+              <Alert severity="warning">
+                {isErrorLoadPost.message}
+              </Alert>
+            </Box>
+          )}
           <form
             autoComplete="off"
             onSubmit={onFormSubmit}
@@ -55,13 +75,13 @@ const PostForm = () => {
 
               <Grid item xs>
                 <TextField
+                  required
                   fullWidth
                   id="title"
                   label="Title"
                   name="title"
                   value={state.title}
                   onChange={inputChangeHandler}
-                  required
                 />
               </Grid>
 
@@ -89,13 +109,15 @@ const PostForm = () => {
                   fullWidth
                   type="submit"
                   color="primary"
-                  variant="contained">Create new post</Button>
+                  variant="contained"
+                disabled={isLoadingPost}>
+                  {isLoadingPost ? <CircularProgress /> : 'Create new post'}
+                </Button>
               </Grid>
             </Grid>
           </form>
         </Box>
       </Container>
-    </>
   );
 };
 

@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { registration } from './usersThunk.ts';
-import { isRegisterError, isRegisterUser } from './usersSlice.ts';
+import { isRegisterError, isRegisterUser, selectUser } from './usersSlice.ts';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
 import { Registration } from '../../types';
 
@@ -13,6 +13,9 @@ const RegForm = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const registartionDetails = useAppSelector(selectUser);
+
   const loadingRegisteredUser = useAppSelector(isRegisterUser);
   const errorRegisteredUser = useAppSelector(isRegisterError);
 
@@ -44,7 +47,19 @@ const RegForm = () => {
 
     try {
       await dispatch(registration(registered)).unwrap();
-      navigate('/');
+
+      setRegistered((prevState) => {
+        return {
+          ...prevState,
+          username: '',
+          password: '',
+        };
+      });
+
+      setTimeout(()=> {
+        navigate('/');
+      }, 1600);
+
     } catch (e) {
       //error
     }
@@ -66,9 +81,9 @@ const RegForm = () => {
         <Typography component="h1" variant="h5">
           Registration
         </Typography>
-        {loadingRegisteredUser &&
+        {registartionDetails &&
           <Alert severity="success">
-            New user is registered!
+            {registartionDetails.message}
           </Alert>
         }
         <Box component="form" noValidate onSubmit={formSubmitHandler} sx={{mt: 3}}>

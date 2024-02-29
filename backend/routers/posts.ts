@@ -15,7 +15,7 @@ postsRouter.post('/', auth, imageUpload.single('image'), async (req: RequestUser
 
     try {
         if (!req.body.description || req.body.description === '' && req.file?.filename) {
-            return res.status(422).send({error: `Field Description is not to be an empty`});
+            return res.status(422).send({message: `Field Description is not to be an empty`});
         }
 
         const postData: PostsDataTypes = {
@@ -28,7 +28,7 @@ postsRouter.post('/', auth, imageUpload.single('image'), async (req: RequestUser
         const newPost = new Post(postData);
         await newPost.save();
 
-        res.send({message: 'New post added correctly!', newPost});
+        res.send(newPost);
 
     } catch (e) {
         if (e instanceof mongoose.Error.ValidationError) {

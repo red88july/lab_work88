@@ -8,7 +8,7 @@ import {postsReducer} from '../src/features/posts/postsSlice.ts';
 const usersPersistConfig = {
   key: 'forum:users',
   storage: storage,
-  whitelist: ['users'],
+  whitelist: ['usersDetails'],
 };
 
 const rootReducer = combineReducers({

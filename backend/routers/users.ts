@@ -38,13 +38,13 @@ usersRouter.post('/sessions', async (req, res ,next) => {
         const user = await User.findOne({username: req.body.username});
 
         if (!user) {
-            return res.status(422).send({message: `Username not found`});
+            return res.status(422).send({message: `Username or password isn't correct!`});
         }
 
         const checkPass = await user.checkPassword(req.body.password);
 
         if (!checkPass) {
-            return res.status(422).send({message: `Password is wrong!`});
+            return res.status(422).send({message: `Username or password isn't correct!`});
         }
 
         user.generatedToken();

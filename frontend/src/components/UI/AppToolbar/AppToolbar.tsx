@@ -1,7 +1,7 @@
 import { AppBar, Container, Grid, Link, Toolbar, Typography } from '@mui/material';
 import GuestMenu from './GuestMenu.tsx';
 import {useAppSelector} from '../../../../app/hooks.ts';
-import {selectUser} from '../../../features/users/usersSlice.ts';
+import {selectUserDetails} from '../../../features/users/usersSlice.ts';
 import UserMenu from './UserMenu.tsx';
 
 const MainNav = {
@@ -15,7 +15,7 @@ const MainNav = {
 
 const AppToolbar = () => {
 
-  const user = useAppSelector(selectUser);
+  const user = useAppSelector(selectUserDetails);
 
   return (
     <AppBar sx={{mb: 2}}>
@@ -28,7 +28,7 @@ const AppToolbar = () => {
               </Link>
             </Typography>
             {user ? (
-              <UserMenu user={user} />
+              <UserMenu user={user.user} />
             ) : (<GuestMenu/>)}
           </Grid>
         </Toolbar>

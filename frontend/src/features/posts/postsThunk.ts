@@ -1,24 +1,32 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import {GlobalError, Post, PostMutation} from '../../types';
-import axiosApi from '../../axiosApi.ts';
-import {isAxiosError} from 'axios';
-import {RootState} from '../../../app/store.ts';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { isAxiosError } from 'axios';
 
+import { RootState } from '../../../app/store.ts';
+
+import axiosApi from '../../axiosApi.ts';
+import { GlobalError, Post, PostMutation } from '../../types';
 
 export const postsCreate = createAsyncThunk<PostMutation, Post, {  rejectValue: GlobalError, state: RootState }>(
   'posts/createPost',
   async (posted,  {rejectWithValue, getState}) => {
+
     try {
-      const token = getState().users.users?.token;
+      const token = getState().users.usersDetails?.user.token;
 
-      console.log(token);
+      const formData = new FormData();
+      const keys = Object.keys(posted) as (keyof Post)[];
 
-      if(!token) {
-        return {message: 'Token Not found'};
-      }
+      keys.forEach(key => {
+        const value = posted[key];
 
-      const response = await axiosApi.post('/posts', posted, {headers: { 'Authorization': `Bearer:${token}`}});
+        if (value !== null) {
+          formData.append(key, value);
+        }
+      });
+
+      const response = await axiosApi.post('/posts', formData, {headers: { 'Authorization': 'Bearer ' + token}});
       return response.data;
+
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 422) {
         return rejectWithValue(e.response.data);

@@ -1,4 +1,4 @@
-import {GlobalError,  PostMutation} from '../../types';
+import {GlobalError, PostMutation} from '../../types';
 import {createSlice} from '@reduxjs/toolkit';
 import {postsCreate} from './postsThunk.ts';
 import {RootState} from '../../../app/store.ts';
@@ -37,4 +37,5 @@ export const postsSlice = createSlice({
 });
 
 export const postsReducer = postsSlice.reducer;
-export const selecPosts = (state: RootState) => state.posts.posts;
+export const isLoadPost = (state: RootState) => state.posts.isLoadingPost;
+export const isErrorPost = (state: RootState) => state.posts.isErrorPost;

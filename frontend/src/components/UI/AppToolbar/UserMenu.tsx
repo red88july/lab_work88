@@ -3,10 +3,7 @@ import {User} from '../../../types';
 
 import {Box, Button, Link, Menu, MenuItem} from '@mui/material';
 import {useAppDispatch} from '../../../../app/hooks.ts';
-import {login, logout} from '../../../features/users/usersThunk.ts';
-import {postsCreate} from '../../../features/posts/postsThunk.ts';
-import {useSelector} from 'react-redux';
-import {selecPosts} from '../../../features/posts/postsSlice.ts';
+import {logout} from '../../../features/users/usersThunk.ts';
 
 const addPost = {
   color: 'inherit',
@@ -16,6 +13,13 @@ const addPost = {
   '&:hover': {
     color: 'inherit',
     textDecoration: 'underline',
+  },
+};
+
+const boxStyleLink = {
+  '&:hover': {
+    transition: '1s',
+    transform: 'scale(1.2)',
   },
 };
 
@@ -44,13 +48,17 @@ const UserMenu: React.FC<Props> = ({user}) => {
 
   return (
     <>
-      <Box>
-        <Button color="inherit" onClick={handleClick}>
-          Hello, {user.username}
-        </Button>
-        <Link href="/new-post" sx={addPost}>
-          Add new post
-        </Link>
+      <Box display="flex" alignItems="center">
+        <Box>
+          <Button color="inherit" onClick={handleClick}>
+            Hello, {user.username}
+          </Button>
+        </Box>
+        <Box sx={boxStyleLink}>
+          <Link href="/new-post" sx={addPost}>
+            Add new post
+          </Link>
+        </Box>
       </Box>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} keepMounted>
         <MenuItem

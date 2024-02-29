@@ -26,7 +26,6 @@ const auth = async (req: RequestUser, res: Response, next: NextFunction) => {
 
     req.user = user;
     next();
-
 }
 
 export default auth;
