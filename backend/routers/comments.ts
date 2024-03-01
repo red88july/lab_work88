@@ -48,7 +48,7 @@ commentsRouter.get('/', async (req, res, next) => {
         }
 
         const getCommentById = await Comment.find(query).populate(
-            {path: 'user', select: 'username'}).populate({path: 'post', select: 'datetime'}).sort({date: -1});
+            {path: 'user', select: 'username'}).sort({date: -1});
 
         res.send(getCommentById);
 

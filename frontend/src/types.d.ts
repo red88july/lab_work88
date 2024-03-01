@@ -85,9 +85,6 @@ export interface CommentResponse {
     _id: string;
     username: string;
   };
-  post: {
-    _id: string;
-    datetime: string;
-  };
+  post: string;
   comment: string;
 }

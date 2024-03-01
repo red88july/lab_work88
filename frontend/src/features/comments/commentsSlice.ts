@@ -7,20 +7,16 @@ import { RootState } from '../../../app/store.ts';
 
 interface CommentsState {
   comments: Comment | null;
-
   commentsByPost: CommentResponse[];
   isLoadingCommentPost: boolean;
-
   isLoadingComment: boolean;
   isErrorComment: GlobalErrorComment | null;
 }
 
 const initialState: CommentsState = {
   comments: null,
-
   commentsByPost: [],
   isLoadingCommentPost: false,
-
   isLoadingComment: false,
   isErrorComment: null,
 };
@@ -62,3 +58,4 @@ export const commentsReducer = commentsSlice.reducer;
 export const isLoadComment = (state: RootState) => state.comments.isLoadingComment;
 export const isErrComment = (state: RootState) => state.comments.isErrorComment;
 export const selectCommentsByPost = (state: RootState) => state.comments.commentsByPost;
+export const isLoadindCommentsByPost = (state: RootState) => state.comments.isLoadingCommentPost;

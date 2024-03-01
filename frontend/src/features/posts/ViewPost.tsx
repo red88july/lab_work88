@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Alert, Box, Button, CardMedia, Container, Typography } from '@mui/material';
+import {Alert, Box, Button, CardMedia, CircularProgress, Container, Typography} from '@mui/material';
 
 import { useSelector } from 'react-redux';
 import { selectViewPost } from './postsSlice.ts';
@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 
 import { viewOnePost } from './postsThunk.ts';
 import { selectUserDetails } from '../users/usersSlice.ts';
-import iconUsercomment from '../../assets/images/ic-author.png';
+import iconUserComment from '../../assets/images/ic-author.png';
 import iconDatetimePost from '../../assets/images/ic-date.png';
 import picOfPostMessage from '../../assets/images/ic-message.png';
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
@@ -18,7 +18,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 import { apiURL } from '../../constants.ts';
 import {getCommentsByPost} from '../comments/commentsThunk.ts';
-import {selectCommentsByPost} from '../comments/commentsSlice.ts';
+import {isLoadindCommentsByPost, selectCommentsByPost} from '../comments/commentsSlice.ts';
 
 const stylePostBox = {
   borderRadius: '10px',
@@ -44,7 +44,7 @@ const picDate = {
 
 const picAuthor = {
   padding: '5px 0 5px 50px',
-  backgroundImage: `url(${iconUsercomment})`,
+  backgroundImage: `url(${iconUserComment})`,
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'left center',
   backgroundSize: '40px',
@@ -68,6 +68,7 @@ const ViewPost = () => {
   const dispatch = useAppDispatch();
   const viewPost = useSelector(selectViewPost);
   const getComments = useSelector(selectCommentsByPost);
+  const loadingCommentsPost = useSelector(isLoadindCommentsByPost);
 
   const user = useAppSelector(selectUserDetails);
 
@@ -129,6 +130,8 @@ const ViewPost = () => {
           <InsertCommentIcon />
           Comments
         </Typography>
+        {loadingCommentsPost && (<Box sx={{display: 'flex', justifyContent: 'center'}}>
+          <CircularProgress size={100}/></Box>) }
         {getComments.map(comments => (
           <Box key={comments._id} id={comments._id} sx={styleCommentBox}>
             <Box display="flex" flexDirection="column">
@@ -141,13 +144,6 @@ const ViewPost = () => {
                 <Typography gutterBottom variant="subtitle1" component="div">
                   <p style={{textIndent: '25px', margin: 0}}>{comments.comment}</p>
                 </Typography>
-              </Box>
-              <Box display="flex" flexDirection="column" justifyContent="right" marginBottom={1}>
-                <Box display="flex" flexDirection="column" width="200px">
-                  <Typography gutterBottom variant="subtitle2" component="div" sx={picDate}>
-                    <em>{dayjs(comments.post.datetime).format('YYYY-MM-DD HH:mm')}</em>
-                  </Typography>
-                </Box>
               </Box>
             </Box>
           </Box>
