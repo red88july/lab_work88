@@ -43,7 +43,7 @@ postsRouter.get('/', async (req, res, next) => {
 
     try {
 
-        const getPosts = await Post.find().sort({datetime: -1});
+        const getPosts = await Post.find().populate({path: 'user', select: 'username'}).sort({datetime: -1});
         return res.send(getPosts);
 
     } catch (e) {

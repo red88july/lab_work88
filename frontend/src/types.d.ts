@@ -58,3 +58,14 @@ export interface Post {
   description: string;
   image: File | null;
 }
+
+export type ApiUser = Omit<User, 'token'>;
+
+export interface Posts {
+  _id: string;
+  user: ApiUser;
+  title: string;
+  description: string;
+  image: null | string;
+  datetime: string;
+}

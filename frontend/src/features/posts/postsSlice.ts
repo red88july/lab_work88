@@ -1,16 +1,18 @@
-import {GlobalError, PostMutation} from '../../types';
+import {GlobalError, PostMutation, Posts} from '../../types';
 import {createSlice} from '@reduxjs/toolkit';
-import {postsCreate} from './postsThunk.ts';
+import {getPosts, postsCreate} from './postsThunk.ts';
 import {RootState} from '../../../app/store.ts';
 
 interface UsersState {
   posts: PostMutation | null;
+  allPosts: Posts[];
   isLoadingPost: boolean;
   isErrorPost: GlobalError | null;
 }
 
 const initialState: UsersState = {
   posts: null,
+  allPosts: [],
   isLoadingPost: false,
   isErrorPost: null,
 };
@@ -33,9 +35,21 @@ export const postsSlice = createSlice({
       state.isLoadingPost = false;
       state.isErrorPost = error || null;
     });
+
+    builder.addCase(getPosts.pending, (state) => {
+      state.isLoadingPost = true;
+    });
+    builder.addCase(getPosts.fulfilled, (state, {payload: data}) => {
+      state.isLoadingPost = false;
+      state.allPosts = data;
+    });
+    builder.addCase(getPosts.rejected, (state) => {
+      state.isLoadingPost = false;
+    });
   }
 });
 
 export const postsReducer = postsSlice.reducer;
 export const isLoadPost = (state: RootState) => state.posts.isLoadingPost;
 export const isErrorPost = (state: RootState) => state.posts.isErrorPost;
+export const getAllPost = (state: RootState) => state.posts.allPosts;

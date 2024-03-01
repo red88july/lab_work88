@@ -5,12 +5,14 @@ import {Route, Routes} from 'react-router-dom';
 import PageNoFoundPicture from '../src/assets/images/404PageNotFound.jpg';
 import LogForm from './features/users/LogForm.tsx';
 import PostForm from './features/posts/PostForm.tsx';
+import Posts from './features/posts/Posts.tsx';
 
 function App() {
   return (
     <>
         <Layout>
             <Routes>
+              <Route path="/" element={(<Posts />)}/>
               <Route path="/register" element={(<RegForm />)}/>
               <Route path="/login" element={(<LogForm />)}/>
               <Route path="/new-post" element={(<PostForm />)}/>
