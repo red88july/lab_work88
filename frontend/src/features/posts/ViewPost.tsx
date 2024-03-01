@@ -1,16 +1,17 @@
-import {Box, Button, CardMedia, Container, Typography} from '@mui/material';
+import {Alert, Box, Button, CardMedia, Container, Typography} from '@mui/material';
 import dayjs from 'dayjs';
 import {useSelector} from 'react-redux';
 import {selectViewPost} from './postsSlice.ts';
-import {useAppDispatch} from '../../../app/hooks.ts';
-import {useParams} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../../app/hooks.ts';
+import {NavLink, useParams} from 'react-router-dom';
 import {useEffect} from 'react';
 import {viewOnePost} from './postsThunk.ts';
-import iconAuthorPost from '../../assets/images/ic-author.png';
 import iconDatetimePost from '../../assets/images/ic-date.png';
 import picOfPostMessage from '../../assets/images/ic-message.png';
 import AddIcon from '@mui/icons-material/Add';
 import {apiURL} from '../../constants.ts';
+import {selectUserDetails} from '../users/usersSlice.ts';
+
 
 const stylePostBox = {
   borderRadius: '10px',
@@ -38,6 +39,8 @@ const ViewPost = () => {
   const dispatch = useAppDispatch();
   const viewPost = useSelector(selectViewPost);
 
+  const user = useAppSelector(selectUserDetails);
+
   let imagePost = picOfPostMessage;
 
   if (viewPost?.image) {
@@ -52,42 +55,44 @@ const ViewPost = () => {
     }
   }, [dispatch, id]);
 
-
   return (
-      <Container maxWidth="sm">
-        <Box marginTop={10}>
-          <Box key={viewPost?._id} id={viewPost?._id} sx={stylePostBox}>
-            <Box sx={{display: 'flex', justifyContent: 'center'}}>
-              <CardMedia
-                component="img"
-                sx={{width: '80%', height: 'auto', borderRadius: '10px', border: '3px solid black'}}
-                image={imagePost}
-                alt="message"
-              />
+    <Container maxWidth="sm">
+      <Box marginTop={10}>
+        <Box key={viewPost?._id} id={viewPost?._id} sx={stylePostBox}>
+          <Box sx={{display: 'flex', justifyContent: 'center'}}>
+            <CardMedia
+              component="img"
+              sx={{width: '80%', height: 'auto', borderRadius: '10px', border: '3px solid black'}}
+              image={imagePost}
+              alt="message"
+            />
+          </Box>
+          <Box display="flex" flexDirection="column">
+            <Box marginBottom={3}>
+              <Typography gutterBottom variant="subtitle1" component="div">
+                <p style={{textIndent: '25px'}}>{viewPost?.description}</p>
+              </Typography>
             </Box>
-            <Box display="flex" flexDirection="column">
-              <Box marginBottom={3}>
-                <Typography gutterBottom variant="subtitle1" component="div">
-                  <p style={{textIndent: '25px'}}>{viewPost?.description}</p>
+            <Box display="flex" flexDirection="column" justifyContent="right" marginBottom={1}>
+              <Box display="flex" flexDirection="column" width="300px">
+                <Typography gutterBottom variant="subtitle2" component="div" sx={picDate}>
+                  <em>{dayjs(viewPost?.datetime).format('YYYY-MM-DD HH:mm')}</em>
                 </Typography>
               </Box>
-              <Box display="flex" flexDirection="column" justifyContent="right" marginBottom={1}>
-                <Box display="flex" flexDirection="column" width="300px">
-                  <Typography gutterBottom variant="subtitle2" component="div" sx={picDate}>
-                    <em>{dayjs(viewPost?.datetime).format('YYYY-MM-DD HH:mm')}</em>
-                  </Typography>
-                </Box>
-              </Box>
-              <Box display="flex" justifyContent="right">
-                <Button variant="contained">
-                  <AddIcon />
+            </Box>
+            <Box display="flex" justifyContent="right">
+              {user ?
+                (<Button component={NavLink} to="/comments" variant="contained" startIcon={<AddIcon/>}>
                   Add comment
-                </Button>
-              </Box>
+                </Button>) :
+                (<Alert severity="info">
+                  Only login may add comments!
+                </Alert>)}
             </Box>
           </Box>
         </Box>
-      </Container>
+      </Box>
+    </Container>
   );
 };
 
