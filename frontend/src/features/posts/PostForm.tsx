@@ -59,7 +59,6 @@ const PostForm = () => {
   return (
       <Container maxWidth="sm">
         <Box marginTop={20}>
-
           {isErrorLoadPost && (
             <Box marginBottom={4}>
               <Alert severity="warning">
@@ -69,10 +68,8 @@ const PostForm = () => {
           )}
           <form
             autoComplete="off"
-            onSubmit={onFormSubmit}
-          >
+            onSubmit={onFormSubmit}>
             <Grid container direction="column" spacing={2}>
-
               <Grid item xs>
                 <TextField
                   required
@@ -84,7 +81,6 @@ const PostForm = () => {
                   onChange={inputChangeHandler}
                 />
               </Grid>
-
               <Grid item xs>
                 <TextField
                   fullWidth
@@ -95,7 +91,6 @@ const PostForm = () => {
                   onChange={inputChangeHandler}
                 />
               </Grid>
-
               <Grid item xs>
                 <FileInput
                   label="Image"
@@ -103,7 +98,6 @@ const PostForm = () => {
                   onChange={fileInputChangeHandler}
                 />
               </Grid>
-
               <Grid item xs>
                 <Button
                   fullWidth

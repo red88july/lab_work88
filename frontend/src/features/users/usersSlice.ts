@@ -1,7 +1,8 @@
-import {GlobalError, LoginResponse, RegistrationResponse, ValidationError} from '../../types';
-import {createSlice} from '@reduxjs/toolkit';
-import {login, registration} from './usersThunk.ts';
-import {RootState} from '../../../app/store.ts';
+import { createSlice } from '@reduxjs/toolkit';
+import { login, registration } from './usersThunk.ts';
+import { RootState } from '../../../app/store.ts';
+
+import { GlobalError, LoginResponse, RegistrationResponse, ValidationError } from '../../types';
 
 interface UsersState {
   users: RegistrationResponse | null;
@@ -61,9 +62,12 @@ export const usersSlice = createSlice({
 
 export const usersReducer = usersSlice.reducer;
 export const {unsetUser} = usersSlice.actions;
+
 export const selectUser = (state: RootState) => state.users.users;
 export const selectUserDetails = (state: RootState) => state.users.usersDetails;
+
 export const isRegisterUser = (state: RootState) => state.users.isLoadingUser;
 export const isRegisterError = (state: RootState) => state.users.registrationError;
+
 export const isLoginUser = (state: RootState) => state.users.isLoggingUser;
 export const isLoginError = (state: RootState) => state.users.falseLoggingUser;

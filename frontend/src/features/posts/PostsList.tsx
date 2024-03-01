@@ -1,8 +1,9 @@
 import dayjs from 'dayjs';
-import {Box, CardMedia, Typography} from '@mui/material';
+import {Box, CardMedia, Link, Typography} from '@mui/material';
 
-import {ApiUser} from '../../types';
-import {apiURL} from '../../constants.ts';
+import { apiURL } from '../../constants.ts';
+import { ApiUser } from '../../types';
+
 import picOfPostMessage from '../../assets/images/ic-message.png';
 import iconAuthorPost from '../../assets/images/ic-author.png';
 import iconDatetimePost from '../../assets/images/ic-date.png';
@@ -45,7 +46,6 @@ const picTitle = {
   backgroundSize: '30px',
 };
 
-
 interface Props {
   id: string;
   user: ApiUser;
@@ -70,22 +70,23 @@ const PostsList: React.FC<Props> = ({id, user, title, image, datetime}) => {
             component="img"
             sx={{width: 130, height: 130, borderRadius: '10px', border: '3px solid black'}}
             image={imagePost}
-            alt="message"
+            alt={title}
           />
         </Box>
-        <Box display="flex" flexDirection="column" marginLeft={5}>
-
+        <Box display="flex" flexDirection="column" marginLeft={5} width="400px">
           <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={1}>
-            <Typography gutterBottom variant="subtitle2" component="div" sx={picAuthor} marginLeft={2}>
+            <Typography gutterBottom variant="subtitle2" component="div" sx={picAuthor}>
               <em>{user.username}</em>
             </Typography>
-            <Typography gutterBottom variant="subtitle2" component="div" sx={picDate} marginLeft={4}>
+            <Typography gutterBottom variant="subtitle2" component="div" sx={picDate}>
               <em>{dayjs(datetime).format('YYYY-MM-DD HH:mm')}</em>
             </Typography>
           </Box>
           <Box>
             <Typography gutterBottom variant="h6" sx={picTitle} component="div">
-              <strong>{title}</strong>
+              <Link href={`posts/${id}`}>
+                <strong>{title}</strong>
+              </Link>
             </Typography>
           </Box>
         </Box>

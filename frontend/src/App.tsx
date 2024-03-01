@@ -6,6 +6,7 @@ import PageNoFoundPicture from '../src/assets/images/404PageNotFound.jpg';
 import LogForm from './features/users/LogForm.tsx';
 import PostForm from './features/posts/PostForm.tsx';
 import Posts from './features/posts/Posts.tsx';
+import ViewPost from './features/posts/ViewPost.tsx';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
               <Route path="/register" element={(<RegForm />)}/>
               <Route path="/login" element={(<LogForm />)}/>
               <Route path="/new-post" element={(<PostForm />)}/>
+              <Route path="posts/:id" element={(<ViewPost />)}/>
               <Route path="*" element={(
                 <Box
                   sx={{display: "flex", alignItems:'center',

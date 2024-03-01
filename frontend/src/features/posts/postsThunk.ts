@@ -4,7 +4,7 @@ import { isAxiosError } from 'axios';
 import { RootState } from '../../../app/store.ts';
 
 import axiosApi from '../../axiosApi.ts';
-import {GlobalError, Post, PostMutation, Posts} from '../../types';
+import { GlobalError, Post, PostMutation, Posts } from '../../types';
 
 export const postsCreate = createAsyncThunk<PostMutation, Post, {  rejectValue: GlobalError, state: RootState }>(
   'posts/createPost',
@@ -42,6 +42,14 @@ export const getPosts = createAsyncThunk<Posts[]>(
   'posts/getPosts',
   async () => {
     const response = await axiosApi.get<Posts []>('/posts');
+    return response.data;
+  }
+);
+
+export const viewOnePost = createAsyncThunk<Posts, string>(
+  'posts/viewOnePost',
+  async (id) => {
+    const response = await axiosApi.get('/posts/' + id);
     return response.data;
   }
 );
