@@ -1,16 +1,20 @@
-import mongoose from "mongoose";
-import { Router } from 'express';
+import mongoose, {Types} from "mongoose";
+import {Router} from 'express';
 
 import Comment from "../models/Comment";
-import auth, { RequestUser } from "../middleware/auth";
+import auth, {RequestUser} from "../middleware/auth";
 
-import { CommentsDataTypes } from "../types";
+import {CommentsDataTypes} from "../types";
 
 export const commentsRouter = Router();
 
 commentsRouter.post('/', auth, async (req: RequestUser, res, next) => {
 
     try {
+
+        if (!req.body.comment || req.body.comment === '') {
+            return res.status(422).send({error: 'Comment field is not to be an empty!'})
+        }
 
         const commentsData: CommentsDataTypes = {
             user: req.user,

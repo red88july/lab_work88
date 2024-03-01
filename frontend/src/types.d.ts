@@ -40,6 +40,10 @@ export interface GlobalError {
   message: string;
 }
 
+export interface GlobalErrorComment {
+  error: string;
+}
+
 export interface PostMutation {
   _id: string;
   user: {
@@ -68,4 +72,19 @@ export interface Posts {
   description: string;
   image: null | string;
   datetime: string;
+}
+
+export interface Comment {
+  post: string;
+  comment: string;
+}
+
+export interface CommentResponse {
+  _id: string;
+  user: {
+    _id: string;
+    username: string;
+  };
+  post: string;
+  comment: string;
 }

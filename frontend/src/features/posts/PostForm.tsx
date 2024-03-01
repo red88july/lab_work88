@@ -11,7 +11,6 @@ import { isErrorPost, isLoadPost } from './postsSlice.ts';
 const PostForm = () => {
 
   const dispatch = useAppDispatch();
-
   const isLoadingPost = useSelector(isLoadPost);
   const isErrorLoadPost = useSelector(isErrorPost);
 

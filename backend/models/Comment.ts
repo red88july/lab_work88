@@ -28,7 +28,10 @@ const CommentSchema = new Schema({
         }
     },
 
-    comment: String,
+    comment: {
+        type: String,
+        required: true,
+    },
 
 }, { versionKey: false });
 

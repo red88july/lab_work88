@@ -7,7 +7,7 @@ import LogForm from './features/users/LogForm.tsx';
 import PostForm from './features/posts/PostForm.tsx';
 import Posts from './features/posts/Posts.tsx';
 import ViewPost from './features/posts/ViewPost.tsx';
-import CommentsForm from './features/CommentsForm.tsx';
+import CommentsForm from './features/comments/CommentsForm.tsx';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
               <Route path="/login" element={(<LogForm />)}/>
               <Route path="/new-post" element={(<PostForm />)}/>
               <Route path="posts/:id" element={(<ViewPost />)}/>
-              <Route path="/comments" element={(<CommentsForm />)}/>
+              <Route path="comments/:id" element={(<CommentsForm />)}/>
               <Route path="*" element={(
                 <Box
                   sx={{display: "flex", alignItems:'center',

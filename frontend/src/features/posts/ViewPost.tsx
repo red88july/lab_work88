@@ -1,17 +1,21 @@
-import {Alert, Box, Button, CardMedia, Container, Typography} from '@mui/material';
 import dayjs from 'dayjs';
-import {useSelector} from 'react-redux';
-import {selectViewPost} from './postsSlice.ts';
-import {useAppDispatch, useAppSelector} from '../../../app/hooks.ts';
-import {NavLink, useParams} from 'react-router-dom';
-import {useEffect} from 'react';
-import {viewOnePost} from './postsThunk.ts';
+import { Alert, Box, Button, CardMedia, Container, Typography } from '@mui/material';
+
+import { useSelector } from 'react-redux';
+import { selectViewPost } from './postsSlice.ts';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
+import { NavLink, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+
+
+import { viewOnePost } from './postsThunk.ts';
+import { selectUserDetails } from '../users/usersSlice.ts';
+
 import iconDatetimePost from '../../assets/images/ic-date.png';
 import picOfPostMessage from '../../assets/images/ic-message.png';
 import AddIcon from '@mui/icons-material/Add';
-import {apiURL} from '../../constants.ts';
-import {selectUserDetails} from '../users/usersSlice.ts';
 
+import { apiURL } from '../../constants.ts';
 
 const stylePostBox = {
   borderRadius: '10px',
@@ -36,6 +40,7 @@ const picDate = {
 };
 
 const ViewPost = () => {
+
   const dispatch = useAppDispatch();
   const viewPost = useSelector(selectViewPost);
 
@@ -54,6 +59,7 @@ const ViewPost = () => {
       dispatch(viewOnePost(id));
     }
   }, [dispatch, id]);
+
 
   return (
     <Container maxWidth="sm">
@@ -82,7 +88,7 @@ const ViewPost = () => {
             </Box>
             <Box display="flex" justifyContent="right">
               {user ?
-                (<Button component={NavLink} to="/comments" variant="contained" startIcon={<AddIcon/>}>
+                (<Button component={NavLink} to={`/comments/${id}`} variant="contained" startIcon={<AddIcon/>}>
                   Add comment
                 </Button>) :
                 (<Alert severity="info">
