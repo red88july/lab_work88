@@ -35,3 +35,28 @@ commentsRouter.post('/', auth, async (req: RequestUser, res, next) => {
     }
 
 });
+
+commentsRouter.get('/', async (req, res, next) => {
+
+    try {
+
+        const queryParam = await Comment.findOne({post: req.query.post});
+        let query: { post?: string } = {};
+
+        if (queryParam) {
+            query.post = req.query.post as string;
+        }
+
+        const getCommentById = await Comment.find(query).populate(
+            {path: 'user', select: 'username'}).populate({path: 'post', select: 'datetime'}).sort({date: -1});
+
+        res.send(getCommentById);
+
+    } catch (e) {
+        if (e instanceof mongoose.Error.ValidationError) {
+            return res.status(422).send(e);
+        }
+        next(e);
+    }
+
+});

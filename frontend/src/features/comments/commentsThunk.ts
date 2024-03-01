@@ -20,3 +20,11 @@ export const createComment = createAsyncThunk<CommentResponse, Comment, { reject
     }
   }
 );
+
+export const getCommentsByPost = createAsyncThunk<CommentResponse [], string>(
+  'comments/commentsPost',
+  async (id: string) => {
+    const response = await axiosApi.get<CommentResponse []>('/comments?post=' + id);
+    return response.data;
+  }
+);

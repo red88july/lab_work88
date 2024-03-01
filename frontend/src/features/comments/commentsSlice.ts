@@ -1,18 +1,26 @@
 import { createSlice, } from '@reduxjs/toolkit';
 
-import { Comment, GlobalErrorComment } from '../../types';
+import {Comment, CommentResponse, GlobalErrorComment} from '../../types';
 
-import { createComment } from './commentsThunk.ts';
+import {createComment, getCommentsByPost} from './commentsThunk.ts';
 import { RootState } from '../../../app/store.ts';
 
 interface CommentsState {
   comments: Comment | null;
+
+  commentsByPost: CommentResponse[];
+  isLoadingCommentPost: boolean;
+
   isLoadingComment: boolean;
   isErrorComment: GlobalErrorComment | null;
 }
 
 const initialState: CommentsState = {
   comments: null,
+
+  commentsByPost: [],
+  isLoadingCommentPost: false,
+
   isLoadingComment: false,
   isErrorComment: null,
 };
@@ -36,9 +44,21 @@ export const commentsSlice = createSlice({
       state.isLoadingComment = false;
       state.isErrorComment = error || null;
     });
+
+    builder.addCase(getCommentsByPost.pending, (state) => {
+      state.isLoadingCommentPost = true;
+    });
+    builder.addCase(getCommentsByPost.fulfilled, (state, {payload: data}) => {
+      state.isLoadingCommentPost = false;
+      state.commentsByPost = data;
+    });
+    builder.addCase(getCommentsByPost.rejected, (state) => {
+      state.isLoadingCommentPost = false;
+    });
   }
 });
 
 export const commentsReducer = commentsSlice.reducer;
 export const isLoadComment = (state: RootState) => state.comments.isLoadingComment;
 export const isErrComment = (state: RootState) => state.comments.isErrorComment;
+export const selectCommentsByPost = (state: RootState) => state.comments.commentsByPost;
